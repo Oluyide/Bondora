@@ -20,7 +20,7 @@ using BusinessLogic.Interfaces;
 using BusinessLogic.Models;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
-using AuthorizeAttribute = System.Web.Http.AuthorizeAttribute;
+using AuthorizeAttribute = System.Web.Mvc.AuthorizeAttribute;
 using HttpPostAttribute = System.Web.Mvc.HttpPostAttribute;
 
 namespace Bondora2.Controllers
@@ -35,6 +35,7 @@ namespace Bondora2.Controllers
             _inventory = inventory;
         }
         // GET: Inventories/Index
+        [Authorize]
         public async Task<ActionResult> Index()
         {
             var allInventories = await _inventory.GetAllInventory();
@@ -53,6 +54,7 @@ namespace Bondora2.Controllers
 
         }
 
+        [Authorize]
         public async Task<ActionResult> RentItem(int id)
         {
             var item = await _inventory.GetInventoryById(id);
@@ -66,6 +68,7 @@ namespace Bondora2.Controllers
             return Json(new { data = equipmentdetails }, JsonRequestBehavior.AllowGet);
         }
 
+        
         [HttpPost]
         public async Task<ActionResult> AddtoCart(FormCollection fc)
         {
