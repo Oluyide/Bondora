@@ -113,13 +113,13 @@
                     <div><b>Please Enter the Number of Days</b></div><br />
                     <form id="rentform" action="/Inventories/AddtoCart" method="post">
                         <input id="id" type="hidden" name="equipmentId" value="">
-                        Days:<input id="sdate" type="number" name="startDate" min="1" value="">
+                        Days: <input id="sdate" type="number" name="startDate" min="1" value="" required>
                          
                         @*Start Date:<input id="sdate" type="date" name="startDate" value=""> --
                             End Date:<input id="edate" type="date" name="EndDate" value="">*@
                         <br /> <br />
 
-                        <input class="col-lg-offset-4" type="submit" id="submitIt" value="Add to Cart">
+                        <input class="col-lg-offset-1" type="submit" id="submitIt" value="Add to Cart">
                     </form>
                 </div>
 
