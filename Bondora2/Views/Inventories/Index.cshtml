@@ -1,0 +1,211 @@
+﻿@using Bondora2.Models;
+@using Microsoft.AspNet.Identity;
+@{
+    ViewBag.Title = "Index";
+}
+@{
+
+    IEnumerable<InventoryModels> inventories = ViewData["Inventories"] as IEnumerable<InventoryModels>;
+    IEnumerable<CustomerCartModels> myCarts = ViewData["MyCarts"] as IEnumerable<CustomerCartModels>;
+}
+<br />
+<div class="row">
+    <div class="col-md-7">
+        <div class="panel panel-primary list-panel" id="list-panel">
+            <div class="panel-heading list-panel-heading">
+                <h1 class="panel-title list-panel-title">Assets Available</h1>
+            </div>
+            <div class="panel-body">
+                <table id="assets-data-table" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Equipment</th>
+                            <th>Type</th>
+                            <th>Rent Terms</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var asset in inventories)
+                        {
+                            <tr>
+                                <td>@asset.EquipmentName</td>
+                                <td>@asset.EquipmentsType.TypeName</td>
+                                <td>@asset.EquipmentsType.RentTerms</td>
+                                @*<td>@Html.ActionLink("Rent", "Rent", new { id = asset.Id }, new { @data_toggle = "modal", @data_target = "#daysForm", @class = "showModal" })</td>*@
+                                <td><button class="rent" data-id="@asset.Id">Rent</button>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="panel panel-primary list-panel" id="list-panel">
+            <div class="panel-heading list-panel-heading">
+                <h1 class="panel-title list-panel-title">My Cart</h1>
+            </div>
+            <div class="panel-body">
+                @*<button type="button">@Html.ActionLink("CheckOut", "CheckOut", new { id = User.Identity.GetUserId() })</button>*@
+                <i>Check out to get invoice</i><br/>
+                <button type="button">@Html.ActionLink("Check Out", "DownloadInvoice", new { id = User.Identity.GetUserId() })</button>
+               
+                <br /><br />
+                <table id="cart" class="table table-striped table-bordered" style="width:100%">
+
+                    <thead>
+                        <tr>
+                            <th>Equipment</th>
+                            <th>Days of Rent</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (myCarts != null)
+                        {
+                            foreach (var mycart in myCarts)
+                            {
+                                <tr>
+                                    <td>@mycart.InventoryItem.EquipmentName</td>
+                                    <td>@mycart.RentDays</td>
+                                    @*<td><button class="rent" data-id="@mycart.Id">Remove</button></td>*@
+                                    <td>@Html.ActionLink("Remove", "Remove", new { id = @mycart.Id })</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="daysForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Rent Form</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <ul>
+                        <li> <b>Equipment:</b><span id="equip"></span></li>
+                        <li> <b>Type: </b><span id="type"></span></li>
+                        <li> <b>Terms:</b> <span id="terms"></span></li>
+                    </ul>
+                </div>
+                <br />
+
+                @*<div id="myLittleForm">
+                        <form action="/MyController/GetContact/" method="post">
+                            <input id="createdBy" type="text" /> <br />
+                            <input id="submitIt" type="submit" value="Submit" />
+                        </form>
+                    </div>*@
+
+                <div class="md-form mb-5 col-lg-offset-1">
+                    <div><b>Please Enter the Number of Days</b></div><br />
+                    <form id="rentform" action="/Inventories/AddtoCart" method="post">
+                        <input id="id" type="hidden" name="equipmentId" value="">
+                        Days:<input id="sdate" type="number" name="startDate" min="1" value="">
+                         
+                        @*Start Date:<input id="sdate" type="date" name="startDate" value=""> --
+                            End Date:<input id="edate" type="date" name="EndDate" value="">*@
+                        <br /> <br />
+
+                        <input class="col-lg-offset-4" type="submit" id="submitIt" value="Add to Cart">
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#assets-data-table').DataTable();
+        });
+
+        $(document).ready(function () {
+
+            $('#cart').DataTable({
+                "paging": false,
+                "searching": false
+            });
+        });
+
+        $(document).ready(function () {
+            $(".rent").click(function () {
+                event.preventDefault();
+                $("#equip").empty();
+                $("#type").empty();
+                $("#terms").empty();
+                $("#id").empty();
+
+                $.ajax({
+                    url: "/Inventories/RentItem",
+                    cache: false,
+                    data: { id: $(this).data('id') },
+                    success: function (data) {
+                        var detail = JSON.parse(data.data);
+                        $("#id").val(detail.Id);
+                        $("#equip").append(detail.EquipmentName);
+                        $("#type").append(detail.EquipmentsType.TypeName);
+                        $("#terms").append(detail.EquipmentsType.RentTerms);
+                        $("#daysForm").modal('show');
+
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('Failed to retrieve states.');
+                    }
+                });
+
+            });
+        });
+
+        $('#submitIt').submit(function () {
+            event.preventDefault();
+            var id = $('#id').val();
+
+            var sdays = $('#sdays').val();
+            //var edays = new Date($('#edays').val());
+            if (edays < sdays) {
+                alert("Wrong Date inputs! End Date cannot be smaller than Start Date")
+            }
+            $.ajax({
+                type: "POST",
+                url: "/Inventories/AddtoCart",
+                dataType: "text",
+                //data: { 'id': id, 'sdays': sdays, 'edays': edays},
+                data: {
+                    //Get the input from Document Object Model
+                    //by their ID
+                    'id': id,
+                    'sdays': sdays
+                    //'edays': edays
+                },
+                success: function (result) {
+                    // $('#myLittleForm').html(result);
+                },
+
+                error: function (request, status, error) {
+                    //Do Something on Failure
+                }
+            });
+        });
+    </script>
+
+}
+
