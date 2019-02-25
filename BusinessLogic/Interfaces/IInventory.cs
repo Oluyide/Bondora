@@ -19,11 +19,11 @@ namespace BusinessLogic.Interfaces
 
         Task<List<FeeSetup>> GetAllFees();
 
-        void SaveCustomerCart(CustomerCart cart);
+        Task SaveCustomerCart(CustomerCart cart);
 
-        void DeleteCartItem(CustomerCart cart);
+        Task DeleteCartItem(CustomerCart cart);
 
-        void UpdateCustomerCart(int id);
+        Task UpdateCustomerCart(int id);
     }
 
 

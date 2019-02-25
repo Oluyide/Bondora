@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Mvc;
+using System.Web.UI;
 using AutoMapper;
 using Bondora2.Infrastructure;
 using Bondora2.Models;
@@ -38,6 +39,7 @@ namespace Bondora2.Controllers
         }
         // GET: Inventories/Index
         [Authorize]
+       
         public async Task<ActionResult> Index()
         {
             List<InventoryModels> inventoryList = new List<InventoryModels>();
@@ -110,7 +112,7 @@ namespace Bondora2.Controllers
 
                 carts.RentDays = sday;
 
-                _inventory.SaveCustomerCart(carts);
+                await _inventory.SaveCustomerCart(carts);
             }
             catch(Exception ex)
             {
@@ -120,12 +122,12 @@ namespace Bondora2.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Remove(int id)
+        public async Task<ActionResult> Remove(int id)
         {
             
             CustomerCart cartitem = new CustomerCart { Id = id };
 
-             _inventory.DeleteCartItem(cartitem);
+            await _inventory.DeleteCartItem(cartitem);
 
             return RedirectToAction("Index");
         }
@@ -139,7 +141,8 @@ namespace Bondora2.Controllers
 
                 var myCarts = await _inventory.CheckoutToGenerateInvoice(User.Identity.GetUserId());
 
-
+                //I assumed all fees will be input by a Application Admin which will be persisted to the database therefore the 
+                //I have the Fees table which store all the fees available
                 var fees = await _inventory.GetAllFees();
 
                 foreach (var item in myCarts)
@@ -152,9 +155,11 @@ namespace Bondora2.Controllers
                     if (item.InventoryItem.EquipmentsType.TypeName == EquipType.Heavy.ToString())
                     {
                         model.BonusPoint = item.InventoryItem.EquipmentsType.LoyaltyPoint;
-                        //rental price is one - time rental fee plus premium fee for each day rented.
-                        model.RentalPrice = fees.Where(x => x.FeeTypeName == FeeType.OneTime.ToString()).Select(y => y.Fee).FirstOrDefault() + (fees.Where(x => x.FeeTypeName == "Premium daily").Select(y => y.Fee).FirstOrDefault() * item.RentDays);
 
+                        //rental price is one - time rental fee plus premium fee for each day rented.
+                        model.RentalPrice = fees.Where(x => x.FeeTypeName == FeeType.OneTime.ToString()).Select(y => y.Fee).FirstOrDefault() +
+                                            (fees.Where(x => x.FeeTypeName == FeeType.PremiumDaily.ToString()).Select(y => y.Fee).FirstOrDefault() * item.RentDays);
+                        //What am doing here is to compare,fecth price from fee table and calculate
                     }
                     else if (item.InventoryItem.EquipmentsType.TypeName == EquipType.Regular.ToString())
                     {
@@ -163,6 +168,7 @@ namespace Bondora2.Controllers
                         //2 days plus regular fee for the number of days over 2.
                         if (item.RentDays >= (int)DaysEval.TwoDays)
                         {
+                            
 
                             model.RentalPrice = fees.Where(x => x.FeeTypeName == FeeType.OneTime.ToString()).Select(y => y.Fee).FirstOrDefault() +
                                 (fees.Where(x => x.FeeTypeName == FeeType.PremiumDaily.ToString()).Select(y => y.Fee).FirstOrDefault() * (int)DaysEval.TwoDays) +
@@ -185,7 +191,7 @@ namespace Bondora2.Controllers
                         {
 
                             model.RentalPrice = (fees.Where(x => x.FeeTypeName == FeeType.PremiumDaily.ToString()).Select(y => y.Fee).FirstOrDefault() * (int)DaysEval.ThreeDays) +
-                                 (fees.Where(x => x.FeeTypeName == FeeType.RegularDaily.ToString()).Select(y => y.Fee).FirstOrDefault() * (item.RentDays - 3));
+                                 (fees.Where(x => x.FeeTypeName == FeeType.RegularDaily.ToString()).Select(y => y.Fee).FirstOrDefault() * (item.RentDays - (int)DaysEval.ThreeDays));
                         }
                         else
                         {
@@ -194,11 +200,11 @@ namespace Bondora2.Controllers
                     }
                     mycartlist.Add(model);
 
-                    _inventory.UpdateCustomerCart(item.Id);
+                    await _inventory.UpdateCustomerCart(item.Id);
 
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex.Message);
             }
@@ -213,8 +219,8 @@ namespace Bondora2.Controllers
             
                 MemoryStream memoryStream = new MemoryStream();
                 TextWriter tw = new StreamWriter(memoryStream);
-                try
-                {
+            try
+            {
                 tw.WriteLine("                    Bondora                        ");
                 tw.WriteLine("                  Rent Invoice                     ");
                 tw.WriteLine("---------------------------------------------------");
@@ -225,9 +231,9 @@ namespace Bondora2.Controllers
                 {
                     string equipment = item.InventoryItem.EquipmentName.ToString();
 
-                    if (equipment.Length < 17)
+                    if (equipment.Length < 21)
                     {
-                        tw.WriteLine(equipment.PadRight(equipment.Length + (17 - equipment.Length), ' ') + "                             " + item.RentalPrice.ToString());
+                        tw.WriteLine(equipment.PadRight(equipment.Length + (21 - equipment.Length), ' ') + "                             " + item.RentalPrice.ToString());
                     }
                     else
                     {
@@ -244,7 +250,7 @@ namespace Bondora2.Controllers
                 tw.Flush();
                 tw.Close();
 
-            }
+        }
             catch(Exception ex)
             {
                 logger.Error(ex.Message);

@@ -49,27 +49,28 @@ namespace BusinessLogic.Repository
             return fees;
         }
 
-        public void SaveCustomerCart(CustomerCart cart)
+        public async Task SaveCustomerCart(CustomerCart cart)
         {
             context.CustomerCart.Add(cart);
-            context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
-        public void UpdateCustomerCart(int id)
+        public async Task UpdateCustomerCart(int id)
         {
 
-            CustomerCart cart = context.CustomerCart.Single(x => x.Id == id);
+            CustomerCart cart = await context.CustomerCart.SingleAsync(x => x.Id == id);
             cart.IsCheckedOut = true;
             context.Entry(cart).State = System.Data.Entity.EntityState.Modified;
-            context.SaveChangesAsync();
+            await context.SaveChangesAsync();
+            
                 
             
         }
 
-        public void DeleteCartItem(CustomerCart cart)
+        public async Task DeleteCartItem(CustomerCart cart)
         {
             context.Entry(cart).State = EntityState.Deleted;
-           context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         
