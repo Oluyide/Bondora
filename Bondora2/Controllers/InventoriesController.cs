@@ -96,21 +96,16 @@ namespace Bondora2.Controllers
                 var item = await _inventory.GetInventoryById(id);
                 var fees = await _inventory.GetAllFees();
 
-                CustomerCart carts = new CustomerCart();
-
-                carts.InventoryItem = await _inventory.GetInventoryById(id);
-
-                carts.UserId = User.Identity.GetUserId();
-
-                carts.CustomerName = User.Identity.Name;
-
-                carts.StartDate = DateTime.Today;
-
-                carts.EndDate = DateTime.Now.AddDays(sday);
-
-                carts.IsCheckedOut = false;
-
-                carts.RentDays = sday;
+                CustomerCart carts = new CustomerCart()
+                {
+                    InventoryItem = await _inventory.GetInventoryById(id),
+                    UserId = User.Identity.GetUserId(),
+                    CustomerName = User.Identity.Name,
+                    StartDate = DateTime.Today,
+                    EndDate = DateTime.Now.AddDays(sday),
+                    IsCheckedOut = false,
+                    RentDays = sday
+                };
 
                 await _inventory.SaveCustomerCart(carts);
             }
@@ -229,17 +224,17 @@ namespace Bondora2.Controllers
 
                     if (equipment.Length < 21)
                     {
-                        tw.WriteLine(equipment.PadRight(equipment.Length + (21 - equipment.Length), ' ') + "                             " + item.RentalPrice.ToString());
+                        tw.WriteLine(equipment.PadRight(equipment.Length + (42 - equipment.Length), ' ') +item.RentalPrice.ToString());
                     }
                     else
                     {
-                        tw.WriteLine(item.InventoryItem.EquipmentName.ToString() + "                             " + item.RentalPrice.ToString());
+                        tw.WriteLine(equipment.PadRight(42,' ') + item.RentalPrice.ToString());
                     }
                 }
                 tw.WriteLine("---------------------------------------------------");
                 tw.WriteLine("---------------------Summary-----------------------");
-                tw.WriteLine("Total Price(€):                             " + invoiceList.Sum(x => x.RentalPrice).ToString());
-                tw.WriteLine("Loyalty Point:                              " + invoiceList.Sum(x => x.BonusPoint).ToString());
+                tw.WriteLine("Total Price(€):" + invoiceList.Sum(x => x.RentalPrice).ToString().PadLeft(33, ' '));
+                tw.WriteLine("Loyalty Point:"  + invoiceList.Sum(x => x.BonusPoint).ToString().PadLeft(29, ' '));
                 tw.WriteLine("---------------------------------------------------");
                 tw.WriteLine("---------------------Tere Tulemast------------------");
 
@@ -254,8 +249,6 @@ namespace Bondora2.Controllers
 
             return File(memoryStream.GetBuffer(), "text/plain", "RentInvoice.txt");
         }
-
-      
 
     }
 }
