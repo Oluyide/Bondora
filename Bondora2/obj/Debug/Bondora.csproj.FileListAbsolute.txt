@@ -393,7 +393,6 @@ C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\Devart.Data.dll
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\Devart.Data.PostgreSql.dll
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\EntityFramework.dll
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\EntityFramework.SqlServer.dll
-C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\log4net.dll
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\Microsoft.AspNet.Identity.Core.dll
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\Microsoft.AspNet.Identity.Owin.dll
@@ -439,7 +438,6 @@ C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\BusinessLogic.pdb
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\BusinessLogic.exe.config
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\AutoMapper.pdb
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\AutoMapper.xml
-C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\log4net.xml
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\Ninject.xml
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\Ninject.Web.Common.xml
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\Ninject.Web.Mvc.xml
@@ -486,3 +484,5 @@ C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\obj\Debug\Bondora.csproj.
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\obj\Debug\Bondora.csproj.CopyComplete
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\obj\Debug\Bondora2.dll
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\obj\Debug\Bondora2.pdb
+C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\NLog.dll
+C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\Bondora2\bin\NLog.xml

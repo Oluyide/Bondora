@@ -57,7 +57,6 @@ C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\BusinessLo
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\BusinessLogic.pdb
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\EntityFramework.dll
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\EntityFramework.SqlServer.dll
-C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\log4net.dll
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\Microsoft.Web.Infrastructure.dll
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\Mono.Security.dll
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\Ninject.dll
@@ -74,7 +73,6 @@ C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\System.Web
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\WebActivatorEx.dll
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\EntityFramework.xml
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\log4net.xml
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\Ninject.xml
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\Ninject.Web.Common.xml
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\Ninject.Web.Mvc.xml
@@ -92,7 +90,6 @@ C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\fi\Npgsql.
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\fr\Npgsql.resources.dll
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\ja\Npgsql.resources.dll
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\zh-CN\Npgsql.resources.dll
-C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\obj\Debug\BusinessLogic.csprojAssemblyReference.cache
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\obj\Debug\BusinessLogic.Migrations.BondoraDbV1.resources
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\obj\Debug\BusinessLogic.Migrations.BondoraDbV2.resources
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\obj\Debug\BusinessLogic.Migrations.BondoraDbV3.resources
@@ -106,3 +103,6 @@ C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\obj\Debug\BusinessLo
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\obj\Debug\BusinessLogic.csproj.CopyComplete
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\obj\Debug\BusinessLogic.exe
 C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\obj\Debug\BusinessLogic.pdb
+C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\NLog.dll
+C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\bin\Debug\NLog.xml
+C:\Users\OLUYIDE OLUMIDE\source\repos\Bondora\BusinessLogic\obj\Debug\BusinessLogic.csprojAssemblyReference.cache
