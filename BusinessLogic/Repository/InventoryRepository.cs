@@ -37,7 +37,6 @@ namespace BusinessLogic.Repository
         }
 
         public async Task<List<CustomerCart>> CheckoutToGenerateInvoice(string userId)
-
         {
             var customerRent = await context.CustomerCart.Include(x => x.InventoryItem).Include(y => y.InventoryItem.EquipmentsType).Where(x => x.UserId == userId && x.IsCheckedOut == false && x.StartDate == DateTime.Today).ToListAsync();
             return customerRent;
@@ -57,14 +56,10 @@ namespace BusinessLogic.Repository
 
         public async Task UpdateCustomerCart(int id)
         {
-
             CustomerCart cart = await context.CustomerCart.SingleAsync(x => x.Id == id);
             cart.IsCheckedOut = true;
             context.Entry(cart).State = System.Data.Entity.EntityState.Modified;
             await context.SaveChangesAsync();
-            
-                
-            
         }
 
         public async Task DeleteCartItem(CustomerCart cart)
@@ -73,7 +68,6 @@ namespace BusinessLogic.Repository
             await context.SaveChangesAsync();
         }
 
-        
         public void Dispose()
         {
             throw new NotImplementedException();

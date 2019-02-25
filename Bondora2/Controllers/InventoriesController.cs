@@ -141,7 +141,7 @@ namespace Bondora2.Controllers
 
                 var myCarts = await _inventory.CheckoutToGenerateInvoice(User.Identity.GetUserId());
 
-                //I assumed all fees will be input by a Application Admin which will be persisted to the database therefore the 
+                //I assumed all fees will be input by a Application Admin which will be persisted to the database therefore
                 //I have the Fees table which store all the fees available
                 var fees = await _inventory.GetAllFees();
 
@@ -168,8 +168,6 @@ namespace Bondora2.Controllers
                         //2 days plus regular fee for the number of days over 2.
                         if (item.RentDays >= (int)DaysEval.TwoDays)
                         {
-                            
-
                             model.RentalPrice = fees.Where(x => x.FeeTypeName == FeeType.OneTime.ToString()).Select(y => y.Fee).FirstOrDefault() +
                                 (fees.Where(x => x.FeeTypeName == FeeType.PremiumDaily.ToString()).Select(y => y.Fee).FirstOrDefault() * (int)DaysEval.TwoDays) +
                                  (fees.Where(x => x.FeeTypeName == FeeType.RegularDaily.ToString()).Select(y => y.Fee).FirstOrDefault() * (item.RentDays - (int)DaysEval.TwoDays));
@@ -210,8 +208,6 @@ namespace Bondora2.Controllers
             }
 
             return mycartlist;
-
-            
         }
 
         public async Task<ActionResult> DownloadInvoice(string id)
@@ -250,7 +246,7 @@ namespace Bondora2.Controllers
                 tw.Flush();
                 tw.Close();
 
-        }
+            }
             catch(Exception ex)
             {
                 logger.Error(ex.Message);
