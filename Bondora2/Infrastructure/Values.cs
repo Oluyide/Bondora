@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bondora2.Infrastructure
 {
-    public enum Values
+    public enum EquipType
     {
         Heavy,
         Regular,
@@ -18,5 +18,12 @@ namespace Bondora2.Infrastructure
         PremiumDaily,
         OneTime,
         RegularDaily
+    }
+
+    public enum DaysEval
+    {
+        OneDay = 1,
+        TwoDays = 2,
+        ThreeDays = 3
     }
 }

@@ -124,7 +124,9 @@ namespace Bondora2.Controllers
         {
             
             CustomerCart cartitem = new CustomerCart { Id = id };
+
              _inventory.DeleteCartItem(cartitem);
+
             return RedirectToAction("Index");
         }
 
@@ -147,24 +149,24 @@ namespace Bondora2.Controllers
                     model.InventoryItem.EquipmentName = item.InventoryItem.EquipmentName;
                     model.IsCheckedOut = true;
 
-                    if (item.InventoryItem.EquipmentsType.TypeName == Values.Heavy.ToString())
+                    if (item.InventoryItem.EquipmentsType.TypeName == EquipType.Heavy.ToString())
                     {
                         model.BonusPoint = item.InventoryItem.EquipmentsType.LoyaltyPoint;
                         //rental price is one - time rental fee plus premium fee for each day rented.
                         model.RentalPrice = fees.Where(x => x.FeeTypeName == FeeType.OneTime.ToString()).Select(y => y.Fee).FirstOrDefault() + (fees.Where(x => x.FeeTypeName == "Premium daily").Select(y => y.Fee).FirstOrDefault() * item.RentDays);
 
                     }
-                    else if (item.InventoryItem.EquipmentsType.TypeName == Values.Regular.ToString())
+                    else if (item.InventoryItem.EquipmentsType.TypeName == EquipType.Regular.ToString())
                     {
                         model.BonusPoint = item.InventoryItem.EquipmentsType.LoyaltyPoint;
                         // Regular – rental price is one - time rental fee plus premium fee for the first
                         //2 days plus regular fee for the number of days over 2.
-                        if (item.RentDays >= 2)
+                        if (item.RentDays >= (int)DaysEval.TwoDays)
                         {
 
                             model.RentalPrice = fees.Where(x => x.FeeTypeName == FeeType.OneTime.ToString()).Select(y => y.Fee).FirstOrDefault() +
-                                (fees.Where(x => x.FeeTypeName == FeeType.PremiumDaily.ToString()).Select(y => y.Fee).FirstOrDefault() * 2) +
-                                 (fees.Where(x => x.FeeTypeName == FeeType.RegularDaily.ToString()).Select(y => y.Fee).FirstOrDefault() * (item.RentDays - 2));
+                                (fees.Where(x => x.FeeTypeName == FeeType.PremiumDaily.ToString()).Select(y => y.Fee).FirstOrDefault() * (int)DaysEval.TwoDays) +
+                                 (fees.Where(x => x.FeeTypeName == FeeType.RegularDaily.ToString()).Select(y => y.Fee).FirstOrDefault() * (item.RentDays - (int)DaysEval.TwoDays));
                         }
                         else
                         {
@@ -173,13 +175,16 @@ namespace Bondora2.Controllers
                                (fees.Where(x => x.FeeTypeName == FeeType.PremiumDaily.ToString()).Select(y => y.Fee).FirstOrDefault());
                         }
                     }
-                    else if (item.InventoryItem.EquipmentsType.TypeName == Values.Specialized.ToString())
+                    else if (item.InventoryItem.EquipmentsType.TypeName == EquipType.Specialized.ToString())
                     {
                         model.BonusPoint = item.InventoryItem.EquipmentsType.LoyaltyPoint;
-                        if (item.RentDays >= 3)
+                        //Specialized – rental price is premium fee for the first 3 days plus regular fee times the number 
+                        //of days over 3.
+
+                        if (item.RentDays >= (int)DaysEval.ThreeDays)
                         {
 
-                            model.RentalPrice = fees.Where(x => x.FeeTypeName == FeeType.PremiumDaily.ToString()).Select(y => y.Fee).FirstOrDefault() * 3 +
+                            model.RentalPrice = (fees.Where(x => x.FeeTypeName == FeeType.PremiumDaily.ToString()).Select(y => y.Fee).FirstOrDefault() * (int)DaysEval.ThreeDays) +
                                  (fees.Where(x => x.FeeTypeName == FeeType.RegularDaily.ToString()).Select(y => y.Fee).FirstOrDefault() * (item.RentDays - 3));
                         }
                         else
