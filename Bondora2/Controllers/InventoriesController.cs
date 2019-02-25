@@ -88,7 +88,6 @@ namespace Bondora2.Controllers
         public async Task<ActionResult> AddtoCart(FormCollection fc)
         {
             
-            
             var id = int.Parse(fc[0].ToString());
             var sday = int.Parse(fc[1].ToString());
             try
@@ -119,11 +118,17 @@ namespace Bondora2.Controllers
 
         public async Task<ActionResult> Remove(int id)
         {
-            
-            CustomerCart cartitem = new CustomerCart { Id = id };
+            try
+            {
+                CustomerCart cartitem = new CustomerCart { Id = id };
 
-            await _inventory.DeleteCartItem(cartitem);
+                await _inventory.DeleteCartItem(cartitem);
+            }
+            catch(Exception ex) {
 
+                logger.Error(ex.Message);
+            }
+        
             return RedirectToAction("Index");
         }
 
