@@ -3,6 +3,7 @@
 http://www.bondorahm.somee.com/Inventories (you can register to view the page  or use username is gbengaoluyide@gmail.com, Password is Pass@word1) 
 1. There is an Sql script in the resource folder.
 2. You can run the script to set up the schema and the data also the connection string section of the webconfig should be ammmended.
+you can login with the same username and password above after launching the sql script.
 
 #Brief description of the project
 
