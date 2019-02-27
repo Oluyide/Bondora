@@ -50,7 +50,6 @@ namespace Bondora2.Controllers
                 var allInventories = await _inventory.GetAllInventory();
                 var myCarts = await _inventory.GetCustomerRent(User.Identity.GetUserId());
 
-                
                 Mapper.Map(allInventories, inventoryList);
                 Mapper.Map(myCarts, mycartlist);
             }
@@ -69,17 +68,12 @@ namespace Bondora2.Controllers
        
         public async Task<ActionResult> RentItem(int id)
         {
-            
                 var item = await _inventory.GetInventoryById(id);
-
-
                 var equipmentdetails = JsonConvert.SerializeObject(item, Formatting.None,
                            new JsonSerializerSettings()
                            {
                                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                            });
-           
-
             return Json(new { data = equipmentdetails }, JsonRequestBehavior.AllowGet);
         }
 
