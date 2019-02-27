@@ -50,7 +50,7 @@ namespace Bondora2.Controllers
                 var allInventories = await _inventory.GetAllInventory();
                 var myCarts = await _inventory.GetCustomerRent(User.Identity.GetUserId());
 
-
+                
                 Mapper.Map(allInventories, inventoryList);
                 Mapper.Map(myCarts, mycartlist);
             }

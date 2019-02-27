@@ -17,7 +17,6 @@ namespace BusinessLogic.Repository
             this.context = context;
         }
 
-
         public async Task<Inventory> GetInventoryById(int id)
         {
             var item = await context.Inventory.Include(x => x.EquipmentsType).FirstOrDefaultAsync(x => x.Id == id);
