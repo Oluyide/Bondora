@@ -12,7 +12,7 @@ namespace BondoraTest
     public class BondoraUnitTesting
     { 
         [TestMethod]
-        public void ReturnsAllInventoriesViewTest()
+        public void ReturnsAllInventoriesView()
         {
             var mockService = new Mock<IInventory>();
             InventoriesController controllerUnderTest = new InventoriesController(mockService.Object);
