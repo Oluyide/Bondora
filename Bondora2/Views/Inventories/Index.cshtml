@@ -51,7 +51,7 @@
                 @*<button type="button">@Html.ActionLink("CheckOut", "CheckOut", new { id = User.Identity.GetUserId() })</button>*@
                 @if (myCarts.Count()!=0)
                 {     <div class="alert alert-success">
-    <strong>Hello!</strong> you have @myCarts.Count().ToString() equipment(s) in your cart
+    <strong>Tere!</strong> you have @myCarts.Count().ToString() equipment(s) in your cart
 </div>
                     <i>Check out to get invoice</i><br />
                     <button type="button">@Html.ActionLink("Check Out", "DownloadInvoice", new { id = User.Identity.GetUserId() })</button>
