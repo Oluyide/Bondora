@@ -9,10 +9,10 @@ using Moq;
 namespace BondoraTest
 {
     [TestClass]
-    public class UnitTest1
+    public class BondoraUnitTesting
     { 
         [TestMethod]
-        public void ReturnsAllInventoriesView()
+        public void ReturnsAllInventoriesViewTest()
         {
             var mockService = new Mock<IInventory>();
             InventoriesController controllerUnderTest = new InventoriesController(mockService.Object);
