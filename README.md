@@ -17,4 +17,8 @@ The project contain Three Projects, which are Bondora(front end),BussinessLogic(
 #Some Nugget Packages used are
 Ninject,Automapper,NLog, Moq
 
+# The code
+InventoriesController.cs in the controller folder of the Bondora 2, IInventory.cs(in interface folder of the BusinessLogic class library) and InventoryRepository (in Repository folder of the BusinessLogic class library)
+
+
 #Looking forward to join the team.
