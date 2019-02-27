@@ -60,7 +60,7 @@ namespace Bondora2.Controllers
 
             ViewData["Inventories"] = inventoryList;
             ViewData["MyCarts"] = mycartlist;
-
+            
             return View();
 
         }
@@ -84,25 +84,32 @@ namespace Bondora2.Controllers
             
             var id = int.Parse(fc[0].ToString());
             var sday = int.Parse(fc[1].ToString());
+
             try
             {
-                var item = await _inventory.GetInventoryById(id);
-                var fees = await _inventory.GetAllFees();
-
-                CustomerCart carts = new CustomerCart()
+                var checkingifExit = await _inventory.CheckItemAlreadyinCart(id, User.Identity.GetUserId());
+                if (checkingifExit == null)
                 {
-                    InventoryItem = await _inventory.GetInventoryById(id),
-                    UserId = User.Identity.GetUserId(),
-                    CustomerName = User.Identity.Name,
-                    StartDate = DateTime.Today,
-                    EndDate = DateTime.Now.AddDays(sday),
-                    IsCheckedOut = false,
-                    RentDays = sday
-                };
+                    var item = await _inventory.GetInventoryById(id);
+                    CustomerCart carts = new CustomerCart()
+                    {
+                        InventoryItem = await _inventory.GetInventoryById(id),
+                        UserId = User.Identity.GetUserId(),
+                        CustomerName = User.Identity.Name,
+                        StartDate = DateTime.Today,
+                        EndDate = DateTime.Now.AddDays(sday),
+                        IsCheckedOut = false,
+                        RentDays = sday
+                    };
 
-                await _inventory.SaveCustomerCart(carts);
+                    await _inventory.SaveCustomerCart(carts);
+                }
+                else
+                {
+                    TempData["AlreadyAdded"] = string.Format("{0} is already added to your cart", checkingifExit.InventoryItem.EquipmentName);
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex.Message);
             }

@@ -24,6 +24,8 @@ namespace BusinessLogic.Interfaces
         Task DeleteCartItem(CustomerCart cart);
 
         Task UpdateCustomerCart(int id);
+
+        Task<CustomerCart> CheckItemAlreadyinCart(int id, string userId);
     }
 
 

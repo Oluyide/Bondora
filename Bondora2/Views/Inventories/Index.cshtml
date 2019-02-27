@@ -9,8 +9,17 @@
     IEnumerable<CustomerCartModels> myCarts = ViewData["MyCarts"] as IEnumerable<CustomerCartModels>;
 }
 <br />
+
 <div class="row">
+    @if (TempData["AlreadyAdded"] != null)
+    {
+    <div class="alert alert-danger col-md-12">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        @TempData["AlreadyAdded"].ToString()
+    </div>
+    }
     <div class="col-md-7">
+        
         <div class="panel panel-primary list-panel" id="list-panel">
             <div class="panel-heading list-panel-heading">
                 <h1 class="panel-title list-panel-title">Assets Available</h1>
@@ -49,46 +58,46 @@
             </div>
             <div class="panel-body">
                 @*<button type="button">@Html.ActionLink("CheckOut", "CheckOut", new { id = User.Identity.GetUserId() })</button>*@
-                @if (myCarts.Count()!=0)
-                {     <div class="alert alert-success">
-    <strong>Tere!</strong> you have @myCarts.Count().ToString() equipment(s) in your cart
-</div>
+                @if (myCarts.Count() != 0)
+                {<div class="alert alert-success">
+                        <strong>Tere!</strong> you have @myCarts.Count().ToString() equipment(s) in your cart
+                    </div>
                     <i>Check out to get invoice</i><br />
                     <button type="button" id="checkout">@Html.ActionLink("Check Out", "DownloadInvoice", new { id = User.Identity.GetUserId() })</button>
                 }
-                    <br /><br />
-                    <table id="cart" class="table table-striped table-bordered" style="width:100%">
+                <br /><br />
+                <table id="cart" class="table table-striped table-bordered" style="width:100%">
 
-                        <thead>
+                    <thead>
+                        <tr>
+                            <th>Equipment</th>
+                            <th>Days of Rent</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var mycart in myCarts)
+                        {
                             <tr>
-                                <th>Equipment</th>
-                                <th>Days of Rent</th>
-                                <th>Actions</th>
+                                <td>@mycart.InventoryItem.EquipmentName</td>
+                                <td>@mycart.RentDays</td>
+                                @*<td><button class="rent" data-id="@mycart.Id">Remove</button></td>*@
+                                <td>@Html.ActionLink("Remove", "Remove", new { id = @mycart.Id })</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                          
-                                @foreach (var mycart in myCarts)
-                                {
-                                    <tr>
-                                        <td>@mycart.InventoryItem.EquipmentName</td>
-                                        <td>@mycart.RentDays</td>
-                                        @*<td><button class="rent" data-id="@mycart.Id">Remove</button></td>*@
-                                        <td>@Html.ActionLink("Remove", "Remove", new { id = @mycart.Id })</td>
-                                    </tr>
-                                }
-                            
-                        </tbody>
-                    </table>
-                </div>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 
 <div class="modal fade" id="daysForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true" >
-    <div class="modal-dialog" role="document" >
-        <div class="modal-content" style="background-color:aliceblue" >
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color:aliceblue">
             <div class="modal-header text-center">
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -118,7 +127,7 @@
                     <form id="rentform" action="/Inventories/AddtoCart" method="post">
                         <input id="id" type="hidden" name="equipmentId" value="">
                         Days: <input id="sdate" type="number" name="startDate" min="1" value="" required>
-                         
+
                         @*Start Date:<input id="sdate" type="date" name="startDate" value=""> --
                             End Date:<input id="edate" type="date" name="EndDate" value="">*@
                         <br /> <br />
