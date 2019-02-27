@@ -10,7 +10,7 @@ you can login with the same username and password above after launching the sql 
 ASP.net MVC 5 is used to develop the app.
 The project contain Three Projects, which are Bondora(front end),BussinessLogic(this is a class library),BondoraTest
 
-#Some Packages used are
-Ninject,Autommapper,NLog, Moq
+#Some Nugget Packages used are
+Ninject,Automapper,NLog, Moq
 
 #Looking forward to join the team.
