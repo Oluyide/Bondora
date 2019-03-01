@@ -5,6 +5,7 @@ http://www.bondorahm.somee.com/Inventories (you can register to view the page  o
 To view the inventory page please click on the Rent Now button
 
 . The Sql script, the entity relation diagram, also a capture of how inventory page look like are in the resources folder. 
+. You can also find the class diagrams in the resources folder
 
 # Local Setup
 . You can run the script to set up the schema and the data also the connection string section of the webconfig should be ammmended.
