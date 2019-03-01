@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace Bondora2.Models
 
         public DateTime EndDate { get; set; }
 
+        [Required]
         public int RentDays { get; set; }
 
         public bool IsCheckedOut { get; set; }

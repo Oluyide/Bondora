@@ -61,9 +61,7 @@ namespace BusinessLogic.Repository
             await context.SaveChangesAsync();
         }
 
-        
-
-        public async Task<CustomerCart> CheckItemAlreadyinCart(int id,string userId)
+       public async Task<CustomerCart> CheckItemAlreadyinCart(int id,string userId)
         {
             var IsalreadyinCart = await context.CustomerCart.Include(x => x.InventoryItem).Include(y => y.InventoryItem.EquipmentsType).Where(x =>x.InventoryItem.Id == id && x.UserId == userId && x.IsCheckedOut == false && x.StartDate == DateTime.Today).SingleOrDefaultAsync();
             return IsalreadyinCart;
