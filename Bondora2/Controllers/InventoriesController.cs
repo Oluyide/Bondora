@@ -47,11 +47,20 @@ namespace Bondora2.Controllers
 
             try
             {
+               
                 var allInventories = await _inventory.GetAllInventory();
                 var myCarts = await _inventory.GetCustomerRent(User.Identity.GetUserId());
 
                 Mapper.Map(allInventories, inventoryList);
                 Mapper.Map(myCarts, mycartlist);
+
+                //clear the cart when enddate of rent is reached and invoice is not collected
+                var cartitems = await _inventory.ClearRentNotCheckedOut(User.Identity.GetUserId());
+                if(cartitems.Count!=0)
+                    foreach(var item in cartitems)
+                    {
+                        await _inventory.DeleteCartItem(item);
+                    }
             }
             catch(Exception ex)
             {
@@ -85,8 +94,8 @@ namespace Bondora2.Controllers
             var id = int.Parse(fc[0].ToString());
             var sday = int.Parse(fc[1].ToString());
 
-            try
-            {
+            //try
+            //{
                 var checkingifExit = await _inventory.CheckItemAlreadyinCart(id, User.Identity.GetUserId());
                 if (checkingifExit == null)
                 {
@@ -108,11 +117,11 @@ namespace Bondora2.Controllers
                 {
                     TempData["AlreadyAdded"] = string.Format("{0} is already added to your cart", checkingifExit.InventoryItem.EquipmentName);
                 }
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    logger.Error(ex.Message);
+            //}
 
             return RedirectToAction("Index");
         }
@@ -202,7 +211,7 @@ namespace Bondora2.Controllers
                     await _inventory.UpdateCustomerCart(item.Id);
 
                 }
-            }
+        }
             catch (Exception ex)
             {
                 logger.Error(ex.Message);
@@ -250,7 +259,7 @@ namespace Bondora2.Controllers
                 tw.Close();
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex.Message);
             }

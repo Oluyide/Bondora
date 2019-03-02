@@ -15,6 +15,8 @@ namespace BusinessLogic.Interfaces
 
         Task<List<CustomerCart>> GetCustomerRent(string userId);
 
+        Task<List<CustomerCart>> ClearRentNotCheckedOut(string userId);
+
         Task<List<CustomerCart>> CheckoutToGenerateInvoice(string userId);
 
         Task<List<FeeSetup>> GetAllFees();

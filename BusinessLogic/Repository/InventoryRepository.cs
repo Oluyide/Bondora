@@ -31,13 +31,19 @@ namespace BusinessLogic.Repository
 
         public async Task<List<CustomerCart>> GetCustomerRent(string userId)
         {
-            var customerRent = await context.CustomerCart.Include(x => x.InventoryItem).Where(x => x.UserId == userId && x.IsCheckedOut == false && x.EndDate > DateTime.Today).ToListAsync();
+            var customerRent = await context.CustomerCart.Include(x => x.InventoryItem).Where(x => x.UserId == userId && x.IsCheckedOut == false && DbFunctions.TruncateTime(x.EndDate) > DateTime.Today).ToListAsync();
+            return customerRent;
+        }
+
+        public async Task<List<CustomerCart>> ClearRentNotCheckedOut(string userId) 
+        {
+            var customerRent = await context.CustomerCart.Include(x => x.InventoryItem).Where(x => x.UserId == userId && x.IsCheckedOut == false && DbFunctions.TruncateTime(x.EndDate) < DateTime.Today).ToListAsync();
             return customerRent;
         }
 
         public async Task<List<CustomerCart>> CheckoutToGenerateInvoice(string userId)
         {
-            var customerRent = await context.CustomerCart.Include(x => x.InventoryItem).Include(y => y.InventoryItem.EquipmentsType).Where(x => x.UserId == userId && x.IsCheckedOut == false && x.StartDate == DateTime.Today).ToListAsync();
+            var customerRent = await context.CustomerCart.Include(x => x.InventoryItem).Include(y => y.InventoryItem.EquipmentsType).Where(x => x.UserId == userId && x.IsCheckedOut == false && x.StartDate <= DateTime.Today).ToListAsync();
             return customerRent;
         }
 
@@ -73,6 +79,7 @@ namespace BusinessLogic.Repository
             await context.SaveChangesAsync();
         }
 
+        
         public void Dispose()
         {
             throw new NotImplementedException();
