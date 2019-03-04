@@ -94,8 +94,8 @@ namespace Bondora2.Controllers
             var id = int.Parse(fc[0].ToString());
             var sday = int.Parse(fc[1].ToString());
 
-            //try
-            //{
+            try
+            {
                 var checkingifExit = await _inventory.CheckItemAlreadyinCart(id, User.Identity.GetUserId());
                 if (checkingifExit == null)
                 {
@@ -117,11 +117,11 @@ namespace Bondora2.Controllers
                 {
                     TempData["AlreadyAdded"] = string.Format("{0} is already added to your cart", checkingifExit.InventoryItem.EquipmentName);
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    logger.Error(ex.Message);
-            //}
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+            }
 
             return RedirectToAction("Index");
         }
